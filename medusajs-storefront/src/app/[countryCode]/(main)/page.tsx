@@ -67,7 +67,7 @@ export default async function Home({
 
   return (
     <>
-      <div className="py-12 mt-52">
+      <div className="py-12 mt-10 md:mt-52">
         <ul className="flex flex-col gap-x-6">
           <FeaturedProducts collections={collections} region={region} />
         </ul>

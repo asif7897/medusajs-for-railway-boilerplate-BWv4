@@ -16,7 +16,8 @@ interface Props {
 
 const Menu: React.FC<Props> = ({ props }) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  console.log(hoveredItem);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories: { [key: string]: Category[] } = {
     New: [
@@ -76,23 +77,45 @@ const Menu: React.FC<Props> = ({ props }) => {
     setHoveredItem(null);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+    setSelectedCategory(null);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+    setSelectedCategory(null);
+  };
+
+    // Function to handle clicking on a main category
+    const handleCategoryClick = (item: string) => {
+      setSelectedCategory(item === selectedCategory ? null : item); // Toggle selectedCategory state
+    };
+  
+    // Function to navigate back to main category list
+    const navigateBack = () => {
+      setSelectedCategory(null);
+    };
+
   return (
     <>
       <div className={`relative w-full md:h-[74px] h-[56px] ${props}`}>
-        <div className="flex justify-between items-center mx-5">
-          <div className="form-search relative mt-2">
-            <Icon.MagnifyingGlass size={20} className='absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer' />
-            <input type="text" placeholder='Search' className=' h-12 rounded-3xl border border-line text-sm w-full pl-10 pr-4' />
+        <div className="flex justify-between items-center my-3 md:my-0 md:mx-5">
+          <div className="form-search relative">
+            <Icon.MagnifyingGlass size={25} className='absolute ml-4 md:ml-0 left-10 md:left-3 top-1/2 -translate-y-1/2 cursor-pointer' />
+            <Icon.List size={25} onClick={toggleSidebar} className='md:hidden absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer' />
+            <input type="text" placeholder='Search' className='hidden md:block h-12 rounded-3xl border border-line text-sm w-full pl-10 pr-4' />
           </div>
           <div className="inset-0 flex items-center justify-center z-0">
-            <a href="" className="flex justify-center items-center cursor-pointer decoration-inherit text-3xl font-extrabold">Mizzan + Main</a>
+            <a href="" className="hidden md:flex justify-center items-center cursor-pointer decoration-inherit text-3xl font-extrabold">Mizzan + Main</a>
+            <Icon.Rocket size={50} className='md:hidden flex justify-center items-center cursor-pointer' />
           </div>
           <div className="flex justify-between items-center gap-3">
-            <Icon.User size={24} color='black' />
-            <Icon.Handbag size={24} color='black' />
+            <Icon.User size={25} color='black'  className='absolute mr-4 right-10 top-1/2 -translate-y-1/2 cursor-pointer' />
+            <Icon.Handbag size={25} color='black' className='absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer' />
           </div>
         </div>
-        <nav className="block isolate bg-white">
+        <nav className="hidden md:block isolate bg-white">
           <ul className=" absolute justify-center gap-4 pb-3.5 flex w-full lg:gap-6">
             {Object.keys(categories).map((item) => (
               <li
@@ -105,7 +128,7 @@ const Menu: React.FC<Props> = ({ props }) => {
                     {item}
                   </Link>
                 </a>
-                {"Shop" === item && (
+                {hoveredItem === item && (
                   <div className="absolute left-0 right-0 mt-2 h-[330px]  bg-white shadow-lg border border-gray-200 rounded-md p-4 z-10">
                     <div className="flex justify-center items-center">
                       <ul className="flex justify-center gap-5 h-full items-center">
@@ -144,6 +167,57 @@ const Menu: React.FC<Props> = ({ props }) => {
             ))}
           </ul>
         </nav>
+
+        {
+          isSidebarOpen && <nav className="md:hidden fixed inset-0 bg-white shadow-lg border border-gray-200 rounded-md p-4 z-10 transform transition-transform duration-300 ease-in-out">
+          <div className="flex justify-end mb-3">
+              <Icon.X size={25} className="cursor-pointer" onClick={closeSidebar} />
+            </div>
+            {selectedCategory ? ( // Render subcategories if a category is selected
+              <>
+                <div className="flex mb-3">
+                  <Icon.ArrowLeft size={25} className="cursor-pointer mx-4" onClick={navigateBack} /> {/* Back button */}
+                  <div className="text-base font-bold">{selectedCategory}</div> {/* Display selected category name */}
+                </div>
+                <ul className="flex flex-col gap-4 pb-3.5">
+                  {categories[selectedCategory].map((category, index) => (
+                    <li key={index} className=" hover:bg-gray-10">
+                      <strong>{category.name}</strong>
+                      <ul className="mt-1">
+                        {category.subcategories.map((subcategory, subIndex) => (
+                          <li className="text-[#081a2c]" key={subIndex}>
+                            <Link href={`/collections/${subcategory.toLowerCase().replace(/\s+/g, '-')}`}>
+                              {subcategory}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              // Render main category list
+              <ul className="flex flex-col gap-4 pb-3.5">
+                <div className="text-3xl font-bold text-center">Mizzen + Main</div>
+                {Object.keys(categories).map((item) => (
+                  <li
+                    key={item}
+                    onMouseEnter={() => handleMouseEnter(item)}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleCategoryClick(item)} // Handle click on main category
+                    className="flex justify-between items-center"
+                  >
+                    <div className="text-base cursor-pointer after:transition-width after:absolute after:-bottom-2.5 after:left-0 after:right-0 after:h-0.5 after:duration-200 after:ease-in-out after:w-0 after:bg-blue-400 hover:text-blue-400">
+                        {item}
+                    </div>
+                  <Icon.CaretRight size={25}></Icon.CaretRight> {/* Placeholder for future icon to open subcategories */}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </nav>
+        }
       </div>
     </>
   );
