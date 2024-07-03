@@ -100,7 +100,7 @@ const Menu: React.FC<Props> = ({ props }) => {
   return (
     <>
       <div className={`relative w-full md:h-[74px] h-[56px] ${props}`}>
-        <div className="flex justify-between items-center my-3 md:my-0 md:mx-5">
+        <div className="flex justify-between items-center my-3 md:mx-5">
           <div className="form-search relative">
             <Icon.MagnifyingGlass size={25} className='absolute ml-4 md:ml-0 left-10 md:left-3 top-1/2 -translate-y-1/2 cursor-pointer' />
             <Icon.List size={25} onClick={toggleSidebar} className='md:hidden absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer' />
@@ -128,8 +128,8 @@ const Menu: React.FC<Props> = ({ props }) => {
                     {item}
                   </Link>
                 </a>
-                {hoveredItem === item && (
-                  <div className="absolute left-0 right-0 mt-2 h-[330px]  bg-white shadow-lg border border-gray-200 rounded-md p-4 z-10">
+                {"Shop" === item && (
+                  <div className="absolute left-0 right-0 mt-2 h-[330px] mb-96  bg-white shadow-lg border border-gray-200 rounded-md p-4 z-auto">
                     <div className="flex justify-center items-center">
                       <ul className="flex justify-center gap-5 h-full items-center">
                         {categories[item].map((category, index) => (
@@ -169,7 +169,7 @@ const Menu: React.FC<Props> = ({ props }) => {
         </nav>
 
         {
-          isSidebarOpen && <nav className="md:hidden fixed inset-0 bg-white shadow-lg border border-gray-200 rounded-md p-4 z-10 transform transition-transform duration-300 ease-in-out">
+          isSidebarOpen && <nav className="md:hidden fixed inset-0 bg-white shadow-lg border border-gray-200 rounded-md p-4 z-50 transform transition-transform duration-300 ease-in-out">
           <div className="flex justify-end mb-3">
               <Icon.X size={25} className="cursor-pointer" onClick={closeSidebar} />
             </div>
