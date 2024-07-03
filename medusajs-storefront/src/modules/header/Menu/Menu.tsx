@@ -2,7 +2,7 @@
 "use client"
 import Link from "next/link";
 import React, { useState } from "react";
-import * as Icon from "@phosphor-icons/react/dist/ssr";
+import * as Icon from "@phosphor-icons/react";
 import img1 from "lib/img1.png"
 import img2 from "lib/logo1.png"
 import img5 from "lib/img5.png";
