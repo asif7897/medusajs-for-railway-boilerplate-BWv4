@@ -128,7 +128,7 @@ const Menu: React.FC<Props> = ({ props }) => {
                     {item}
                   </Link>
                 </a>
-                {"Shop" === item && (
+                {hoveredItem === item && (
                   <div className="absolute left-0 right-0 mt-2 h-[330px] mb-96  bg-white shadow-lg border border-gray-200 rounded-md p-4 z-auto">
                     <div className="flex justify-center items-center">
                       <ul className="flex justify-center gap-5 h-full items-center">
