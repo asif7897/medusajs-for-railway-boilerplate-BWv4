@@ -107,7 +107,7 @@ const Menu: React.FC<Props> = ({ props }) => {
             <input type="text" placeholder='Search' className='hidden md:block h-12 rounded-3xl border border-line text-sm w-full pl-10 pr-4' />
           </div>
           <div className="inset-0 flex items-center justify-center z-0">
-            <a href="" className="hidden md:flex justify-center items-center cursor-pointer decoration-inherit text-3xl font-extrabold">Mizzan + Main</a>
+            <a href="/" className="hidden md:flex justify-center items-center cursor-pointer decoration-inherit text-3xl font-extrabold">Mizzan + Main</a>
             <Icon.Rocket size={50} className='md:hidden flex justify-center items-center cursor-pointer' />
           </div>
           <div className="flex justify-between items-center gap-3">
@@ -123,11 +123,11 @@ const Menu: React.FC<Props> = ({ props }) => {
                 onMouseEnter={() => handleMouseEnter(item)}
                 onMouseLeave={handleMouseLeave}
               >
-                <a href="" className="text-base cursor-pointer after:transition-width after:absolute after:-bottom-2.5 after:left-0 after:right-0 after:h-0.5 after:duration-200 after:ease-in-out after:w-0 after:bg-blue-400 hover:text-blue-400">
+                <div className="text-base cursor-pointer after:transition-width after:absolute after:-bottom-2.5 after:left-0 after:right-0 after:h-0.5 after:duration-200 after:ease-in-out after:w-0 after:bg-blue-400 hover:text-blue-400">
                   <Link href={`/collections/${item.toLowerCase().replace(/\s+/g, '-')}`}>
                     {item}
                   </Link>
-                </a>
+                </div>
                 {hoveredItem === item && (
                   <div className="absolute left-0 right-0 mt-2 h-[330px] mb-96  bg-white shadow-lg border border-gray-200 rounded-md p-4 z-auto">
                     <div className="flex justify-center items-center">
@@ -199,7 +199,7 @@ const Menu: React.FC<Props> = ({ props }) => {
             ) : (
               // Render main category list
               <ul className="flex flex-col gap-4 pb-3.5">
-                <div className="text-3xl font-bold text-center">Mizzen + Main</div>
+                <a href="/"><div className="text-3xl font-bold text-center">Mizzen + Main</div></a>
                 {Object.keys(categories).map((item) => (
                   <li
                     key={item}
