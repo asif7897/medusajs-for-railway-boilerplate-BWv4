@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 
 interface Props {
@@ -16,7 +17,7 @@ const TopNav: React.FC<Props> = ({ props, slogan }) => {
                             {slogan}
                         </div>
 
-                        <div className="text-center hidden  text-button-uppercase  md:flex items-center">
+                        <div className="text-center hidden  text-button-uppercase cursor-pointer  md:flex items-center">
                             ENABLE ACCESSIBILITY
                         </div>
                     </div>

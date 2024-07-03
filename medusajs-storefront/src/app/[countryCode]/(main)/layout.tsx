@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Metadata } from "next"
 
 import Footer from "@modules/layout/templates/footer"
@@ -14,7 +15,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
   return (
     <>
       <TopNav props="bg-[#efefef]" slogan="FREE GROUND SHIPPING ON ORDERS $100+ SHOP NOW" />
-      <Menu props="bg-white" />
+      <Menu props="bg-white"  />
       {props.children}
       <Footer />
     </>
